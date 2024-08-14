@@ -1,0 +1,189 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <iomanip>
+#include <limits>
+#include <cstdlib>  // For std::exit()
+
+using namespace std;
+
+// Global variables
+const int NUM_ROOMS = 5;
+int advance[NUM_ROOMS] = {750, 500, 400, 500, 750};
+int r_no[NUM_ROOMS] = {1, 2, 3, 4, 5};
+int tot[NUM_ROOMS] = {0, 0, 0, 0, 0};
+int g_tot = 0;
+int r_charge[NUM_ROOMS];
+string r_type[NUM_ROOMS];
+string r_cust[NUM_ROOMS] = {"N.A", "N.A", "N.A", "N.A", "N.A"};
+string c_city[NUM_ROOMS];
+string c_nat[NUM_ROOMS];
+char r_avail[NUM_ROOMS];
+int r_per[NUM_ROOMS];
+int no[NUM_ROOMS];
+int year[NUM_ROOMS];
+int month[NUM_ROOMS];
+int day[NUM_ROOMS];
+int i;
+
+// Function prototypes
+void getavail();
+void putavail();
+void features();
+void allocate();
+void putcust();
+void restaurant();
+void deallocate();
+void cancel();
+void intro();
+void screenheader();
+
+void screenheader() {
+    cout << "\n                       :::::::::::::::::::::::::::::::::::::";
+    cout << "\n                       ::                                 ::";
+    cout << "\n                       ::     @@@@@@@@@@@@@@@@@@@@@@@     ::";
+    cout << "\n                       ::     @                     @     ::";
+    cout << "\n                       ::     @      WELCOME TO     @     ::";
+    cout << "\n                       ::     @                     @     ::";
+    cout << "\n                       ::     @    Programers4You  @     ::";
+    cout << "\n                       ::     @                     @     ::";
+    cout << "\n                       ::     @@@@@@@@@@@@@@@@@@@@@@@     ::";
+    cout << "\n                       ::                                 ::";
+    cout << "\n                       :::::::::::::::::::::::::::::::::::::\n\n";
+}
+
+void intro() {
+    cout << "\n\t             Near BSF Chowk, G.T. Road, Jalandhar City,\n\t\t\t\t Punjab 144001, INDIA";
+    cout << "\n\n                              Ph. No.:011-27223959";
+    cout << "\n\n\n                             WELCOMES YOU..............";
+    cout << "\n\n\n\tHotel Ganga Inn is one of the newest Hotel in Jalandhar. The Hotel is \t\tequipped with with all the general amenities and facilities that go \t\talong with memorable stay. Set amidst beautifully landscaped gardens, \t\tit proves to be a ideal dream destination for perceptive traveller.";
+    cout << "\n\n\tThe Hotel have well furnished rooms along with rooms providing pleasent \tviews of the city. The hotel satisfies the needs of business as well \t\tas the leisure traveller. All the rooms at the hotel are furnished \t\tbeautifully. All the rooms are fitted with amenities.";
+    cout << "\n\n                             AMENITIES .......\n";
+    cout << "\n\t\t\t1. 100% Power backup.\n";
+    cout << "\t\t\t2. Automatic lift.\n";
+    cout << "\t\t\t3. Ample parking space.\n";
+    cout << "\t\t\t4. Round the clock security.\n";
+    cout << "\t\t\t5. Running hot and cold water.\n";
+    cout << "\t\t\t6. Free internet service.\n";
+    cout << "\t\t\t7. 24 hours room service.\n";
+    cout << "\t\t\t8. Laundry service.\n";
+    cout << "\nPress Enter to continue:";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
+void getavail() {
+    for (i = 0; i < NUM_ROOMS; i++) {
+        if (r_no[i] == 1) {
+            r_type[i] = "Sp Dlx";
+            r_charge[i] = 1500;
+            if (r_cust[i] == "N.A") {
+                r_avail[i] = 'Y';
+                r_per[i] = 0;
+            }
+        } else if (r_no[i] == 2) {
+            r_type[i] = "Dlx";
+            r_charge[i] = 1000;
+            if (r_cust[i] == "N.A") {
+                r_avail[i] = 'Y';
+                r_per[i] = 0;
+            }
+        } else if (r_no[i] == 3) {
+            r_type[i] = "Gen";
+            r_charge[i] = 750;
+            if (r_cust[i] == "N.A") {
+                r_avail[i] = 'Y';
+                r_per[i] = 0;
+            }
+        } else if (r_no[i] == 4) {
+            r_type[i] = "Coupl";
+            r_charge[i] = 1000;
+            if (r_cust[i] == "N.A") {
+                r_avail[i] = 'Y';
+                r_per[i] = 0;
+            }
+        } else if (r_no[i] == 5) {
+            r_type[i] = "C Dlx";
+            r_charge[i] = 1500;
+            if (r_cust[i] == "N.A") {
+                r_avail[i] = 'Y';
+                r_per[i] = 0;
+            }
+        }
+    }
+}
+
+void putavail() {
+    screenheader();
+    cout << "\n                          ROOM AVAILABILITY";
+    cout << "\n                         -------------------";
+    cout << "\nRoom No | Type     | Charge | Availability | Cust_Name | Period |";
+    for (i = 0; i < NUM_ROOMS; i++) {
+        cout << "\n" << r_no[i] << "\t";
+        cout << r_type[i];
+        cout << "\t" << setw(6) << r_charge[i];
+        cout << "\t" << r_avail[i];
+        cout << "\t" << r_cust[i];
+        cout << "\t" << setw(4) << r_per[i];
+    }
+    cout << endl;
+}
+
+void features() {
+    int typ;
+    screenheader();
+    cout << "\nChoose the room type:\n1. Sp. Delux\n2. Delux";
+    cout << "\n3. General\n4. Couple\n5. C. Delux\n";
+    cin >> typ;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Clear newline character from input buffer
+
+    if (typ > 5 || typ < 1) {
+        cout << "\nWrong choice!! Choose a number between 1-5:";
+        features();
+    }
+
+    switch (typ) {
+        case 1:
+            screenheader();
+            cout << "\n Room number            >>>1";
+            cout << "\n Advance                >>>750\n\n";
+            cout << "\n                      FEATURES OF THIS ROOM                       ";
+            cout << "\n------------------------------------------------------------------";
+            cout << "\n\n Room Type            >>> Sp.delux";
+            cout << "\n\n Room charges         >>> Rs.1500 per day";
+            cout << "\n\n 1. Bed               >>>      2";
+            cout << "\n\n 2. Capacity          >>>      5";
+            cout << "\n\n 3. Balcony available";
+            cout << "\n------------------------------------------------------------------";
+            cout << "\n                     ADDITIONAL FEATURES                        ";
+            cout << "\n------------------------------------------------------------------";
+            cout << "\n\n 1. A/C available ";
+            cout << "\n\n 2. Geyser available";
+            cout << "\n\n 3. TV available      ";
+            cout << "\n------------------------------------------------------------------";
+            cout << "\n NOTE :- Extra bed will cost Rs.50 per bed ";
+            break;
+
+        case 2:
+            screenheader();
+            cout << "\n Room number            >>>2\n\n";
+            cout << "\n Advance                >>>500\n\n";
+            cout << "\n                      FEATURES OF THIS ROOM                       ";
+            cout << "\n-------------------------------------------------------------------";
+            cout << "\n\n Room Type            >>> Delux                                      ";
+            cout << "\n\n Room charges         >>>Rs.1000 per day";
+            cout << "\n\n 1. Bed               >>>      2";
+            cout << "\n\n 2. Capacity          >>>      5";
+            cout << "\n-------------------------------------------------------------------";
+            cout << "\n                    ADDITIONAL FEATURES                        ";
+            cout << "\n-------------------------------------------------------------------";
+            cout << "\n\n 1. A/C available   ";
+            cout << "\n\n 2. Geyser available";
+            cout << "\n\n 3. TV available      ";
+            cout << "\n-------------------------------------------------------------------";
+            cout << "\n NOTE :- Extra bed will cost Rs.50 per bed ";
+            break;
+
+        case 3:
+            screenheader();
+            cout << "\n Room number            >>>3\n\n";
+            cout <<
